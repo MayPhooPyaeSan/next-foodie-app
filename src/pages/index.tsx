@@ -1,5 +1,5 @@
-const HappyPOS = () => {
-  return <h1>Happy POS</h1>;
+const FoodiePOS = () => {
+  return <h1>Foodie POS</h1>;
 };
 
-export default HappyPOS;
+export default FoodiePOS;
