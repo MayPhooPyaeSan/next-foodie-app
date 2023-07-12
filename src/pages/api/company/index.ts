@@ -8,14 +8,11 @@ export default async function handler(
 ) {
   const method = req.method;
   if (method === "POST") {
-    const { name, email } = req.body;
-    await prisma.user.create({
-      data: {
-        name,
-        email,
-      },
-    });
+    const { name } = req.body;
+    const isValid = name;
+    if (!isValid) return res.status(400).send("Bad request");
+    await prisma.company.create({ data: { name } });
     return res.send(200);
   }
-  res.send(405);
+  res.status(405).send("Method not allowed");
 }
