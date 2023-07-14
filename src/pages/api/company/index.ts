@@ -14,5 +14,6 @@ export default async function handler(
     await prisma.company.create({ data: { name } });
     return res.send(200);
   }
+
   res.status(405).send("Method not allowed");
 }
