@@ -1,16 +1,17 @@
+import { config } from "@/config";
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 
 const BackofficeApp = () => {
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [companyName, setCompanyName] = useState("");
 
-  const handleCreateNewUser = async () => {
-    const isValid = user.name && user.email;
+  const handleCreateNewCompany = async () => {
+    const isValid = companyName;
     if (!isValid) return alert("Name and email are required.");
-    await fetch("http://localhost:3000/api/backoffice", {
+    await fetch(`${config.apiBaseUrl}/company`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(user),
+      body: JSON.stringify({ name: companyName }),
     });
   };
 
@@ -21,7 +22,7 @@ const BackofficeApp = () => {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          maxWidth: 200,
+          maxWidth: 400,
           margin: "0 auto",
           mt: 3,
         }}
@@ -29,19 +30,14 @@ const BackofficeApp = () => {
         <TextField
           placeholder="Name"
           sx={{ mb: 2 }}
-          onChange={(evt) => setUser({ ...user, name: evt.target.value })}
-        ></TextField>
-        <TextField
-          placeholder="email"
-          sx={{ mb: 2 }}
-          onChange={(evt) => setUser({ ...user, email: evt.target.value })}
+          onChange={(evt) => setCompanyName(evt.target.value)}
         ></TextField>
         <Button
           variant="contained"
           sx={{ width: "fit-content" }}
-          onClick={handleCreateNewUser}
+          onClick={handleCreateNewCompany}
         >
-          Create new user
+          Create new company
         </Button>
       </Box>
     </Box>
