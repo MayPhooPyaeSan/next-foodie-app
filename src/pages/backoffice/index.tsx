@@ -1,7 +1,9 @@
 import Layout from "@/components/Layout";
 import { config } from "@/config";
+import { useAppDispatch } from "@/store/hooks";
+import { fetchAppData } from "@/store/slices/appSlice";
 import { Box, Button, TextField } from "@mui/material";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -9,10 +11,13 @@ const BackofficeApp = () => {
   const { data, status } = useSession();
   const router = useRouter();
   const [companyName, setCompanyName] = useState("");
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!data && status !== "loading") {
       router.push("auth/signin");
+    } else {
+      dispatch(fetchAppData("4"));
     }
   }, [data]);
 
