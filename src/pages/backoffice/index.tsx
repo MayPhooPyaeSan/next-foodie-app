@@ -1,9 +1,20 @@
+import Layout from "@/components/Layout";
 import { config } from "@/config";
 import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const BackofficeApp = () => {
+  const { data, status } = useSession();
+  const router = useRouter();
   const [companyName, setCompanyName] = useState("");
+
+  useEffect(() => {
+    if (!data && status !== "loading") {
+      router.push("auth/signin");
+    }
+  }, [data]);
 
   const handleCreateNewCompany = async () => {
     const isValid = companyName;
@@ -15,32 +26,36 @@ const BackofficeApp = () => {
     });
   };
 
+  if (status === "loading") return null;
+
   return (
-    <Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          maxWidth: 400,
-          margin: "0 auto",
-          mt: 3,
-        }}
-      >
-        <TextField
-          placeholder="Name"
-          sx={{ mb: 2 }}
-          onChange={(evt) => setCompanyName(evt.target.value)}
-        ></TextField>
-        <Button
-          variant="contained"
-          sx={{ width: "fit-content" }}
-          onClick={handleCreateNewCompany}
+    <Layout>
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            maxWidth: 400,
+            margin: "0 auto",
+            mt: 3,
+          }}
         >
-          Create new company
-        </Button>
+          <TextField
+            placeholder="Name"
+            sx={{ mb: 2 }}
+            onChange={(evt) => setCompanyName(evt.target.value)}
+          ></TextField>
+          <Button
+            variant="contained"
+            sx={{ width: "fit-content" }}
+            onClick={handleCreateNewCompany}
+          >
+            Create new company
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </Layout>
   );
 };
 
