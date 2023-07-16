@@ -16,6 +16,7 @@ import { setOrderlines } from "./orderlinesSlice";
 import { setOrders } from "./ordersSlice";
 import { setTables } from "./tablesSlice";
 import { config } from "@/config";
+import { getSelectedLocationId } from "@/utils/client";
 
 interface AddonsState {
   isLoading: boolean;
@@ -27,12 +28,16 @@ const initialState: AddonsState = {
   error: null,
 };
 
+interface fetchAppDataPayload {
+  locationId?: string;
+}
+
 export const fetchAppData = createAsyncThunk(
   "app/fetchAppData",
-  async (locationId: string, thunkAPI) => {
+  async (payload: fetchAppDataPayload, thunkAPI) => {
     thunkAPI.dispatch(setAppLoading(true));
     const response = await fetch(
-      `${config.apiBaseUrl}/app?locationId=${locationId}`
+      `${config.apiBaseUrl}/app?locationId=${payload.locationId}`
     );
     const responseJson = await response.json();
     const {
@@ -62,6 +67,10 @@ export const fetchAppData = createAsyncThunk(
     thunkAPI.dispatch(setTables(tables));
     thunkAPI.dispatch(setCompany(company));
     thunkAPI.dispatch(setAppLoading(false));
+    const selectedLocationId = getSelectedLocationId();
+    if (!selectedLocationId) {
+      localStorage.setItem("selectedLocationId", locations[0].id);
+    }
   }
 );
 

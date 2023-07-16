@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { prisma } from "@/utils";
+import { prisma } from "@/utils/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
@@ -17,6 +17,7 @@ export default async function handler(
     const newCompany = await prisma.companies.create({
       data: {
         name: "Default companies",
+        address: "Default address",
       },
     });
     await prisma.users.create({

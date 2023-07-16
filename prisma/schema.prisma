@@ -13,6 +13,7 @@ datasource db {
 model Companies {
   id         Int         @id @default(autoincrement())
   name       String
+  address       String
   isArchived Boolean     @default(false)
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @default(now()) @updatedAt
@@ -48,6 +49,7 @@ model Locations {
 model Tables {
   id         Int       @id @default(autoincrement())
   name       String
+  assetUrl String?
   locationId Int
   locations  Locations @relation(fields: [locationId], references: [id])
   isArchived Boolean   @default(false)
@@ -91,12 +93,12 @@ model MenusAddonCategories {
 
 model MenusMenuCategoriesLocations {
   id             Int            @id @default(autoincrement())
-  menuId         Int
-  menus          Menus          @relation(fields: [menuId], references: [id])
+  menuId         Int?
+  menus          Menus?          @relation(fields: [menuId], references: [id])
   menuCategoryId Int
   menuCategories MenuCategories @relation(fields: [menuCategoryId], references: [id])
-  locationId     Int
-  locations      Locations      @relation(fields: [locationId], references: [id])
+  locationId     Int?
+  locations      Locations?      @relation(fields: [locationId], references: [id])
   isArchived     Boolean        @default(false)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @default(now()) @updatedAt

@@ -38,7 +38,7 @@ const TopBar = ({ title = "" }: Props) => {
               <Button
                 variant="text"
                 size="large"
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: "/backoffice" })}
                 sx={{ color: "#E8F6EF" }}
               >
                 Sign out
@@ -50,7 +50,7 @@ const TopBar = ({ title = "" }: Props) => {
               component="div"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >
-              Happy POS
+              Foodie POS
             </Typography>
           )}
         </Toolbar>
