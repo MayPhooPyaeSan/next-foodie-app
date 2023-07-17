@@ -15,5 +15,5 @@ export const config: Config = {
   spaceAccessKeyId: process.env.SPACE_ACCESS_KEY_ID || "",
   spaceSecretAccessKey: process.env.SPACE_SECRET_ACCESS_KEY || "",
   spaceEndpoint: process.env.SPACE_ENDPOINT || "",
-  orderAppUrl: process.env.GOOGLE_CLIENT_SECRET || "",
+  orderAppUrl: process.env.NEXT_PUBLIC_ORDER_APP_URL || "",
 };

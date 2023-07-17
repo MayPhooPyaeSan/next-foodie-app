@@ -5,8 +5,10 @@ import { appData } from "@/store/slices/appSlice";
 import { getSelectedLocationId } from "@/utils/client";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewMenu from "./NewMenu";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Menus = () => {
   const [open, setOpen] = useState(false);

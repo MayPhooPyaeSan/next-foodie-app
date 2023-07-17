@@ -22,7 +22,7 @@ export const qrCodeImageUpload = async (
     );
     const input = {
       Bucket: "msquarefdc",
-      Key: `happy-pos/qrcode/msquare/locationId-${locationId}-tableId-${tableId}.png`,
+      Key: `foodie-pos/qrcode/msquare/locationId-${locationId}-tableId-${tableId}.png`,
       ACL: "public-read",
       Body: Buffer.from(
         qrImageData.replace(/^data:image\/\w+;base64,/, ""),

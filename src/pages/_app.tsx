@@ -1,12 +1,12 @@
 import { store } from "@/store";
 import "./global.css";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
-import { useAppDispatch } from "@/store/hooks";
 import { fetchAppData } from "@/store/slices/appSlice";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "@/store/hooks";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

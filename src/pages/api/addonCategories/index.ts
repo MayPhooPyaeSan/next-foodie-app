@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { name, isRequired, menuIds } = req.body;
-    const isValid = name && menuIds.length;
+    const isValid = name && menuIds.length; // validation
     if (!isValid) return res.status(400).send("Bad request");
     const addonCategory = await prisma.addonCategories.create({
       data: {

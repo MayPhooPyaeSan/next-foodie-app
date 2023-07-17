@@ -1,6 +1,3 @@
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchAppData } from "@/store/slices/appSlice";
-import { getSelectedLocationId } from "@/utils/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -12,7 +9,8 @@ const BackOfficeApp = () => {
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/backoffice/orders");
-    } else if (status !== "loading" && status === "unauthenticated") {
+    }
+    if (status !== "loading" && status === "unauthenticated") {
       router.push("/auth/signin");
     }
   }, [data, router]);

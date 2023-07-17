@@ -14,6 +14,8 @@ import {
   TextField,
 } from "@mui/material";
 import { Companies as Company, Locations as Location } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Settings = () => {
