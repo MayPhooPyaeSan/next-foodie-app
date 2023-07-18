@@ -1,5 +1,5 @@
 import DeleteDialog from "@/components/DeleteDialog";
-import Layout from "@/components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import MenuCard from "@/components/MenuCard";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";

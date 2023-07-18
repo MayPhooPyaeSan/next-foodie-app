@@ -1,14 +1,14 @@
-/* import { OrderContext } from "@/contexts/OrderContext";
+import { useAppSelector } from "@/store/hooks";
+import { selectCart } from "@/store/slices/cartSlice";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 
 const ViewCartBar = () => {
   const router = useRouter();
-  const { cart } = useContext(OrderContext);
-  const cartText = `You have ${cart.length} item in cart.`;
+  const { items } = useAppSelector(selectCart);
+  const cartText = `You have ${items.length} item in cart.`;
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Box
@@ -46,4 +46,3 @@ const ViewCartBar = () => {
 };
 
 export default ViewCartBar;
- */

@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import MenuCard from "@/components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";

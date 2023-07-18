@@ -15,7 +15,7 @@ const initialState: MenusMenuCategoriesLocationsState = {
 };
 
 export const fetchMenusMenuCategoriesLocations = createAsyncThunk(
-  "menusMenuCategoriesLocationsSlice/fetchMenusMenuCategoriesLocations",
+  "menusMenuCategoriesLocations/fetchMenusMenuCategoriesLocations",
   async (locationId: string, thunkAPI) => {
     thunkAPI.dispatch(setIsLoading(true));
     const response = await fetch(

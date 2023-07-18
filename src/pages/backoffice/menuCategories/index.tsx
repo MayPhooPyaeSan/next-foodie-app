@@ -1,5 +1,5 @@
 import ItemCard from "@/components/ItemCard";
-import Layout from "@/components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getSelectedLocationId } from "@/utils/client";

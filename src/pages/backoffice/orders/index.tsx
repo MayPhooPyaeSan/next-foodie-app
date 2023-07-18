@@ -1,7 +1,8 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
 import {
   getNumberOfMenusByOrderId,
   getSelectedLocationId,
@@ -35,7 +36,7 @@ import {
   OrderStatus,
   Orderlines as Orderline,
 } from "@prisma/client";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 interface Props {
   menus: Menu[];
@@ -47,6 +48,7 @@ interface Props {
 
 const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   const renderMenusAddonsFromOrder = () => {
     const orderlineMenuIds = orderlines.map((item) => item.menuId);
@@ -205,14 +207,20 @@ const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
     evt: SelectChangeEvent<"PENDING" | "PREPARING" | "COMPLETE" | "REJECTED">
   ) => {
     const { orderId, menuId } = orderlines[0];
-    await fetch(`${config.apiBaseUrl}/orderlines`, {
+    /* await fetch(`${config.apiBaseUrl}/orderlines`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ orderId, menuId, status: evt.target.value }),
-    });
-    //fetchData();
+    }); */
+    dispatch(
+      updateOrderlineStatus({
+        orderId,
+        menuId,
+        status: evt.target.value as OrderStatus,
+      })
+    );
   };
 
   return (
