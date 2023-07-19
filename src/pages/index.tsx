@@ -1,6 +1,8 @@
 import Features from "@/components/Features";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Testimonials from "@/components/Testimonial";
 import { Box, Typography } from "@mui/material";
 
 const FoodiePOS = () => {
@@ -25,7 +27,9 @@ const FoodiePOS = () => {
       >
         <Hero />
         <Features />
+        <Testimonials />
       </Box>
+      <Footer />
     </Box>
   );
 };

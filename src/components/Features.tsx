@@ -23,7 +23,7 @@ const features = [
   },
   {
     icon: <ChecklistIcon sx={{ fontSize: "90px", color: "#1B9C85" }} />,
-    text: "Backoffice and order app are included in every subscription.",
+    text: "Backoffice and order apps are included in every subscription.",
     delay: "1700ms",
   },
   {

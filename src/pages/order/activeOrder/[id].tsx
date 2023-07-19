@@ -1,22 +1,28 @@
 import OrderLayout from "@/components/OrderLayout";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { emptyCart } from "@/store/slices/cartSlice";
 import { Box, Paper, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const ActiveOrder = () => {
   const router = useRouter();
-  const query = router.query;
+  const { query, isReady } = router;
   const orderId = router.query.id as string;
   const { orders } = useAppSelector(appData);
   const order = orders.find((item) => item.id === Number(orderId));
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!order) {
+    if (isReady && !order) {
       router.push({ pathname: "/order", query });
     }
-  }, [order]);
+  }, [isReady, order]);
+
+  useEffect(() => {
+    dispatch(emptyCart());
+  }, []);
 
   if (!order) return null;
 

@@ -68,7 +68,6 @@ const Review = () => {
     );
     const orderCreated = await response.json();
     dispatch(addOrder(orderCreated));
-    dispatch(emptyCart());
     router.push({ pathname: `/order/activeOrder/${orderCreated.id}`, query });
   };
 
