@@ -1,32 +1,24 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
-import { signOut, useSession } from "next-auth/react";
-import { ReactNode } from "react";
+import { useAppSelector } from "@/store/hooks";
+import { Box } from "@mui/material";
+import SideBar from "./SideBar";
+import TopBar from "./TopBar";
 
 interface Props {
-  children: ReactNode;
+  title?: string;
+  children: string | JSX.Element | JSX.Element[];
 }
 
-const Layout = ({ children }: Props) => {
-  const { data } = useSession();
+const Layout = (props: Props) => {
+  const { isLoading } = useAppSelector((state) => state.app);
+  if (isLoading) return null;
+
   return (
-    <Box>
-      <AppBar position="static">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box>
-            <Typography variant="h4">Foodie App</Typography>
-          </Box>
-          <span />
-          {data && (
-            <Button
-              color="inherit"
-              onClick={() => signOut({ callbackUrl: "/auth/signin" })}
-            >
-              Sign out
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
-      {children}
+    <Box sx={{ width: "100%" }}>
+      <TopBar title={props.title} />
+      <Box sx={{ display: "flex", height: "100vh" }}>
+        <SideBar />
+        <Box sx={{ p: 3, width: "100%" }}>{props.children}</Box>
+      </Box>
     </Box>
   );
 };
