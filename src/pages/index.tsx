@@ -1,5 +1,33 @@
+import Features from "@/components/Features";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import { Box, Typography } from "@mui/material";
+
 const FoodiePOS = () => {
-  return <h1>Foodie POS</h1>;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        minHeight: "100vh",
+        overflowY: "auto",
+        flexDirection: "column",
+      }}
+    >
+      <Header />
+      <Box
+        sx={{
+          maxWidth: { md: "100%", lg: "1280px" },
+          m: "0 auto",
+          px: { xs: "10px", md: "15px" },
+        }}
+      >
+        <Hero />
+        <Features />
+      </Box>
+    </Box>
+  );
 };
 
 export default FoodiePOS;

@@ -1,4 +1,5 @@
 import AddonCategories from "@/components/AddonCategories";
+import OrderLayout from "@/components/OrderLayout";
 import QuantitySelector from "@/components/QuantitySelector";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -114,37 +115,39 @@ const Menu = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        p: 4,
-      }}
-    >
-      <Typography variant="h3" sx={{ mb: 2 }}>
-        {menu?.name}
-      </Typography>
-      <AddonCategories
-        validAddonCategories={validAddonCategories}
-        validAddons={validAddons}
-        selectedAddons={selectedAddons}
-        onChange={(checked, item) => handleAddonSelect(checked, item)}
-      />
-      <QuantitySelector
-        value={quantity}
-        onDecrease={handleQuantityDecrease}
-        onIncrease={handleQuantityIncrease}
-      />
-      <Button
-        variant="contained"
-        disabled={isDisabled}
-        onClick={handleAddToCart}
-        sx={{ mt: 3, width: "fit-content" }}
+    <OrderLayout>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          p: 4,
+        }}
       >
-        Add to cart
-      </Button>
-    </Box>
+        <Typography variant="h3" sx={{ mb: 2 }}>
+          {menu?.name}
+        </Typography>
+        <AddonCategories
+          validAddonCategories={validAddonCategories}
+          validAddons={validAddons}
+          selectedAddons={selectedAddons}
+          onChange={(checked, item) => handleAddonSelect(checked, item)}
+        />
+        <QuantitySelector
+          value={quantity}
+          onDecrease={handleQuantityDecrease}
+          onIncrease={handleQuantityIncrease}
+        />
+        <Button
+          variant="contained"
+          disabled={isDisabled}
+          onClick={handleAddToCart}
+          sx={{ mt: 3, width: "fit-content" }}
+        >
+          Add to cart
+        </Button>
+      </Box>
+    </OrderLayout>
   );
 };
 export default Menu;
