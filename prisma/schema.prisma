@@ -146,8 +146,9 @@ model Orderlines {
   orderId      Int
   menuId       Int
   addonId      Int?
+  itemId       String
   quantity     Int         @default(1)
-  orderStatus OrderStatus @default(PENDING)
+  status OrderStatus @default(PENDING)
   orders       Orders      @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menus        Menus       @relation(fields: [menuId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   addons       Addons?     @relation(fields: [addonId], references: [id], onDelete: NoAction, onUpdate: NoAction)

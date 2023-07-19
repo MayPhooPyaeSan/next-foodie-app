@@ -51,30 +51,33 @@ const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
   const dispatch = useAppDispatch();
 
   const renderMenusAddonsFromOrder = () => {
-    const orderlineMenuIds = orderlines.map((item) => item.menuId);
-    const menuIds: number[] = [];
-    orderlineMenuIds.forEach((item) => {
-      const hasAdded = menuIds.includes(item);
-      if (!hasAdded) menuIds.push(item);
+    const orderlineItemsIds = orderlines.map((item) => item.itemId);
+    const itemIds: string[] = [];
+    orderlineItemsIds.forEach((item) => {
+      const hasAdded = itemIds.includes(item);
+      if (!hasAdded) itemIds.push(item);
     });
 
-    const orderlineMenus = menuIds.map((menuId) => {
+    const orderlineMenus = itemIds.map((itemId) => {
       const orderlineAddonIds = orderlines
-        .filter((item) => item.menuId === menuId)
+        .filter((item) => item.itemId === itemId)
         .map((item) => item.addonId);
       // addon
       const orderlineAddons = addons.filter((item) =>
         orderlineAddonIds.includes(item.id)
       );
       // menu
-      const orderlineMenu = menus.find((item) => item.id === menuId) as Menu;
+      const orderline = orderlines.find(
+        (item) => item.itemId === itemId
+      ) as Orderline;
+      const orderlineMenu = menus.find(
+        (item) => item.id === orderline.menuId
+      ) as Menu;
       // status
-      const status = orderlines.find(
-        (item) => item.menuId === menuId
-      )?.orderStatus;
+      const status = orderlines.find((item) => item.itemId === itemId)?.status;
       // quantiy
       const quantity = orderlines.find(
-        (item) => item.menuId === menuId
+        (item) => item.itemId === itemId
       )?.quantity;
       // find respective addons' addoncategories
       const addonsWithCategories: { [key: number]: Addon[] } = {};
@@ -92,11 +95,17 @@ const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
         }
       });
 
-      return { menu: orderlineMenu, addonsWithCategories, status, quantity };
+      return {
+        menu: orderlineMenu,
+        addonsWithCategories,
+        status,
+        quantity,
+        itemId,
+      };
     });
 
     return orderlineMenus.map((item) => (
-      <Box key={item.menu.id} sx={{ mr: 2 }}>
+      <Box key={item.itemId} sx={{ mr: 2 }}>
         <Paper
           elevation={3}
           sx={{
@@ -187,12 +196,22 @@ const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
                   <Select
                     value={item.status}
                     label="Status"
-                    onChange={handleUpdateOrderStatus}
+                    onChange={(evt) =>
+                      handleUpdateOrderStatus(item.itemId, evt)
+                    }
                   >
-                    <MenuItem value={OrderStatus.PENDING}>Pending</MenuItem>
-                    <MenuItem value={OrderStatus.PREPARING}>Preparing</MenuItem>
-                    <MenuItem value={OrderStatus.COMPLETE}>Complete</MenuItem>
-                    <MenuItem value={OrderStatus.REJECTED}>Reject</MenuItem>
+                    <MenuItem value={OrderStatus.PENDING}>
+                      {OrderStatus.PENDING}
+                    </MenuItem>
+                    <MenuItem value={OrderStatus.PREPARING}>
+                      {OrderStatus.PREPARING}
+                    </MenuItem>
+                    <MenuItem value={OrderStatus.COMPLETE}>
+                      {OrderStatus.COMPLETE}
+                    </MenuItem>
+                    <MenuItem value={OrderStatus.REJECTED}>
+                      {OrderStatus.REJECTED}
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -204,20 +223,12 @@ const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
   };
 
   const handleUpdateOrderStatus = async (
+    itemId: string,
     evt: SelectChangeEvent<"PENDING" | "PREPARING" | "COMPLETE" | "REJECTED">
   ) => {
-    const { orderId, menuId } = orderlines[0];
-    /* await fetch(`${config.apiBaseUrl}/orderlines`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ orderId, menuId, status: evt.target.value }),
-    }); */
     dispatch(
       updateOrderlineStatus({
-        orderId,
-        menuId,
+        itemId,
         status: evt.target.value as OrderStatus,
       })
     );

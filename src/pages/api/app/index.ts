@@ -75,8 +75,8 @@ export default async function handler(
       const query = req.query;
       const locationId = query.locationId as string;
       const tableId = query.tableId as string;
-      const items = req.body.items;
-      const isValid = locationId && tableId && items.length;
+      const cartItems = req.body.items;
+      const isValid = locationId && tableId && cartItems.length;
       if (!isValid) return res.send(400);
       // create order
 
@@ -84,29 +84,32 @@ export default async function handler(
         locationId: Number(locationId),
         tableId: Number(tableId),
         isPaid: false,
-        price: getCartTotalPrice(items),
+        price: getCartTotalPrice(cartItems),
       };
 
       const newOrder = await prisma.orders.create({ data: orderData });
-      items.forEach(async (orderline: any) => {
-        const menu = orderline.menu;
-        const hasAddons = orderline.addons.length;
+      cartItems.forEach(async (item: any) => {
+        const menu = item.menu;
+        const hasAddons = item.addons.length;
         if (hasAddons) {
-          const addons = orderline.addons;
-          const orderlineData = addons.map((item: any) => ({
+          const addons = item.addons;
+          const orderlineData = addons.map((addon: any) => ({
+            itemId: item.id,
             menuId: menu.id,
-            addonId: item.id,
+            addonId: addon.id,
             orderId: newOrder.id,
-            quantity: orderline.quantity,
-            orderStatus: OrderStatus.PENDING,
+            quantity: item.quantity,
+            status: OrderStatus.PENDING,
           }));
           await prisma.orderlines.createMany({ data: orderlineData });
         } else {
           await prisma.orderlines.create({
             data: {
-              menuId: menu.id,
+              itemId: item.id,
+              menuId: item.menu.id,
               orderId: newOrder.id,
-              quantity: orderline.quantity,
+              quantity: item.quantity,
+              status: OrderStatus.PENDING,
             },
           });
         }

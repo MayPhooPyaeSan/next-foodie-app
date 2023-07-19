@@ -1,6 +1,11 @@
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { CartItem, removeFromCart, selectCart } from "@/store/slices/cartSlice";
+import {
+  CartItem,
+  emptyCart,
+  removeFromCart,
+  selectCart,
+} from "@/store/slices/cartSlice";
 import { addOrder } from "@/store/slices/ordersSlice";
 import { getCartTotalPrice } from "@/utils/client";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -63,6 +68,7 @@ const Review = () => {
     );
     const orderCreated = await response.json();
     dispatch(addOrder(orderCreated));
+    dispatch(emptyCart());
     router.push({ pathname: `/order/activeOrder/${orderCreated.id}`, query });
   };
 

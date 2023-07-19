@@ -1,6 +1,6 @@
 import { config } from "@/config";
 import { OrderStatus, Orderlines as Orderline } from "@prisma/client";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface OrderlinesState {
   isLoading: boolean;
@@ -15,8 +15,7 @@ const initialState: OrderlinesState = {
 };
 
 interface UpdateOrderlinePayload {
-  orderId: number;
-  menuId: number;
+  itemId: string;
   status: OrderStatus;
 }
 
@@ -28,6 +27,7 @@ export const updateOrderlineStatus = createAsyncThunk(
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload),
     });
+    thunkAPI.dispatch(updateOrderline(payload));
   }
 );
 
@@ -38,9 +38,20 @@ export const orderlinesSlice = createSlice({
     setOrderlines: (state, action) => {
       state.items = action.payload;
     },
+    updateOrderline: (
+      state,
+      action: PayloadAction<{ itemId: string; status: OrderStatus }>
+    ) => {
+      state.items = state.items.map((item) => {
+        if (item.itemId === action.payload.itemId) {
+          return { ...item, status: action.payload.status };
+        }
+        return item;
+      });
+    },
   },
 });
 
-export const { setOrderlines } = orderlinesSlice.actions;
+export const { setOrderlines, updateOrderline } = orderlinesSlice.actions;
 
 export default orderlinesSlice.reducer;
