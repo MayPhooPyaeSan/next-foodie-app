@@ -8,6 +8,7 @@ const Footer = () => {
       sx={{
         height: 150,
         bgcolor: "#4C4C6D",
+        px: "12px",
       }}
     >
       <Box
@@ -25,11 +26,12 @@ const Footer = () => {
             justifyContent: "space-between",
             width: "100%",
             alignItems: "center",
+            flexWrap: "wrap",
           }}
         >
           <Box>
             <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>
-              HintadaLan <br />
+              Hintada Street <br />
               39 Sanchaung <br />
               Yangon <br />
               +95 123 459 12
