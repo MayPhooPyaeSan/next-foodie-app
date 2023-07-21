@@ -31,10 +31,11 @@ const Footer = () => {
         >
           <Box>
             <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>
-              Hintada Street <br />
-              39 Sanchaung <br />
-              Yangon <br />
-              +95 123 459 12
+              Hintada Street 39 <br />
+              Sanchaung, Yangon <br />
+              contact@foodiepos.com
+              <br />
+              +95 123 456 79
             </Typography>
           </Box>
           <Box sx={{ width: "150px", position: "relative", mt: 2 }}>
