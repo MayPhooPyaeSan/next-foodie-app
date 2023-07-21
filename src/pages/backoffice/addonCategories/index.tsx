@@ -1,5 +1,5 @@
 import ItemCard from "@/components/ItemCard";
-import Layout from "@/components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addAddonCategory } from "@/store/slices/addonCategoriesSlice";

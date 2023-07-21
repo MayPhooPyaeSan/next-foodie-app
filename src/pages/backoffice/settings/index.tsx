@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";

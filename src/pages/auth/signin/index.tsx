@@ -19,7 +19,6 @@ const SignIn = () => {
           top: 0,
           bottom: 0,
           position: "absolute",
-          zIndex: 1,
         }}
       >
         <Button
