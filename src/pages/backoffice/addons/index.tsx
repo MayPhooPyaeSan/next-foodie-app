@@ -1,63 +1,26 @@
-import ItemCard from "@/components/ItemCard";
 import Layout from "@/components/BackofficeLayout";
-import { config } from "@/config";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addAddon } from "@/store/slices/addonsSlice";
+import ItemCard from "@/components/ItemCard";
+import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getAddonsByLocationId, getSelectedLocationId } from "@/utils/client";
 import AddIcon from "@mui/icons-material/Add";
 import EggIcon from "@mui/icons-material/Egg";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
+import NewAddon from "./NewAddon";
 
 const Addons = () => {
-  const {
-    addons,
-    addonCategories,
-    menusAddonCategories,
-    menusMenuCategoriesLocations,
-  } = useAppSelector(appData);
+  const { addons, menusAddonCategories, menusMenuCategoriesLocations } =
+    useAppSelector(appData);
   const [open, setOpen] = useState(false);
-  const dispatch = useAppDispatch();
+
   const selectedLocationId = getSelectedLocationId() as string;
-  const [newAddon, setNewAddon] = useState({
-    name: "",
-    price: 0,
-    addonCategoryId: "",
-  });
   const validAddons = getAddonsByLocationId(
     addons,
     menusAddonCategories,
     menusMenuCategoriesLocations,
     selectedLocationId
   );
-
-  const createAddon = async () => {
-    const isValid = newAddon.name && newAddon.addonCategoryId;
-    if (!isValid)
-      return alert("Please enter addon name and select one addon category");
-    const response = await fetch(`${config.apiBaseUrl}/addons`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newAddon),
-    });
-    const addonCreated = await response.json();
-    dispatch(addAddon(addonCreated));
-    setOpen(false);
-  };
 
   return (
     <Layout title="Addons">
@@ -95,65 +58,7 @@ const Addons = () => {
           ))}
         </Box>
       </Box>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Create new addon</DialogTitle>
-        <DialogContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            minWidth: 300,
-          }}
-        >
-          <TextField
-            label="Name"
-            variant="outlined"
-            sx={{ mt: 1 }}
-            onChange={(evt) =>
-              setNewAddon({
-                ...newAddon,
-                name: evt.target.value,
-              })
-            }
-          />
-          <TextField
-            label="Price"
-            variant="outlined"
-            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-            sx={{ my: 2 }}
-            onChange={(evt) =>
-              setNewAddon({
-                ...newAddon,
-                price: Number(evt.target.value),
-              })
-            }
-          />
-          <FormControl fullWidth>
-            <InputLabel>Addon Category</InputLabel>
-            <Select
-              value={newAddon.addonCategoryId}
-              label="Addon Category"
-              onChange={(evt) =>
-                setNewAddon({ ...newAddon, addonCategoryId: evt.target.value })
-              }
-            >
-              {addonCategories.map((item) => {
-                return (
-                  <MenuItem value={item.id} key={item.id}>
-                    {item.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <Button
-            variant="contained"
-            onClick={createAddon}
-            sx={{ width: "fit-content", alignSelf: "flex-end", mt: 2 }}
-          >
-            Create
-          </Button>
-        </DialogContent>
-      </Dialog>
+      <NewAddon open={open} setOpen={setOpen} />
     </Layout>
   );
 };

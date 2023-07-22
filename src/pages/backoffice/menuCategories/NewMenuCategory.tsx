@@ -46,7 +46,7 @@ const NewMenuCategory = ({ open, setOpen }: Props) => {
   const dispatch = useAppDispatch();
   const selectedLocationId = getSelectedLocationId() as string;
 
-  const createMenuCategory = async () => {
+  const createNewMenuCategory = async () => {
     if (!newMenuCategory.name || !newMenuCategory.locationIds.length)
       return console.log("Please enter menu name");
     const response = await fetch(`${config.apiBaseUrl}/menuCategories`, {
@@ -123,7 +123,7 @@ const NewMenuCategory = ({ open, setOpen }: Props) => {
         </FormControl>
         <Button
           variant="contained"
-          onClick={createMenuCategory}
+          onClick={createNewMenuCategory}
           sx={{ width: "fit-content", alignSelf: "flex-end", mt: 2 }}
         >
           Create
