@@ -1,5 +1,4 @@
 import Layout from "@/components/BackofficeLayout";
-import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
@@ -265,7 +264,6 @@ const Orders = () => {
   const { orders, orderlines, menus, addons, addonCategories } =
     useAppSelector(appData);
   const selectedLocationId = getSelectedLocationId() as string;
-  const dispatch = useAppDispatch();
   const currentLocationOrders = orders.filter(
     (item) => item.locationId === Number(selectedLocationId)
   );
