@@ -17,7 +17,7 @@ const BackofficeLayout = (props: Props) => {
 
   useEffect(() => {
     dispatch(fetchAppData({ locationId: undefined }));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box sx={{ width: "100%" }}>
