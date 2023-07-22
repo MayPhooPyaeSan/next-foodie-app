@@ -1,12 +1,11 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "../assets/logo.png";
-import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
 
 interface Props {
   title?: string;
@@ -38,7 +37,7 @@ const TopBar = ({ title = "" }: Props) => {
               <Button
                 variant="text"
                 size="large"
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: "/backoffice" })}
                 sx={{ color: "#E8F6EF" }}
               >
                 Sign out
