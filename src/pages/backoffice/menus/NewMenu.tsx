@@ -65,7 +65,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
     setMenuImage(files[0]);
   };
 
-  const createMenu = async () => {
+  const createNewMenu = async () => {
     setIsLoading(true);
     try {
       if (menuImage) {
@@ -195,7 +195,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
               <LoadingButton
                 loading={isLoading}
                 variant="contained"
-                onClick={createMenu}
+                onClick={createNewMenu}
                 disabled={isDisabled}
                 sx={{ mt: 2, width: "fit-content" }}
               >

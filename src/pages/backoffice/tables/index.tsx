@@ -16,34 +16,16 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
+import NewTable from "./NewTable";
 
 const Tables = () => {
   const { tables } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const selectedLocationId = getSelectedLocationId();
-  const dispatch = useAppDispatch();
-  const [newTable, setNewTable] = useState({
-    name: "",
-    locationId: selectedLocationId,
-  });
+
   const validTables = tables.filter(
     (item) => item.locationId === Number(selectedLocationId)
   );
-
-  const createNewTable = async () => {
-    const isValid = newTable.name;
-    if (!isValid) return alert("Please enter table name");
-    const response = await fetch(`${config.apiBaseUrl}/tables`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTable),
-    });
-    const tableCreated = await response.json();
-    dispatch(addTable(tableCreated));
-    setOpen(false);
-  };
 
   return (
     <Layout title="Tables">
@@ -82,35 +64,7 @@ const Tables = () => {
           ))}
         </Box>
       </Box>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Create new table</DialogTitle>
-        <DialogContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            minWidth: 300,
-          }}
-        >
-          <TextField
-            label="Name"
-            variant="outlined"
-            sx={{ mt: 1 }}
-            onChange={(evt) =>
-              setNewTable({
-                ...newTable,
-                name: evt.target.value,
-              })
-            }
-          />
-          <Button
-            variant="contained"
-            onClick={createNewTable}
-            sx={{ width: "fit-content", alignSelf: "flex-end", mt: 2 }}
-          >
-            Create
-          </Button>
-        </DialogContent>
-      </Dialog>
+      <NewTable open={open} setOpen={setOpen} />
     </Layout>
   );
 };

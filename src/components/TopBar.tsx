@@ -38,7 +38,7 @@ const TopBar = ({ title = "" }: Props) => {
               <Button
                 variant="text"
                 size="large"
-                onClick={() => signOut({ callbackUrl: "/backoffice" })}
+                onClick={() => signOut()}
                 sx={{ color: "#E8F6EF" }}
               >
                 Sign out

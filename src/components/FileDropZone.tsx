@@ -7,9 +7,12 @@ interface Props {
 }
 
 const FileDropZone = ({ onFileSelected }: Props) => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    onFileSelected(acceptedFiles);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      onFileSelected(acceptedFiles);
+    },
+    [onFileSelected]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -30,7 +33,7 @@ const FileDropZone = ({ onFileSelected }: Props) => {
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag drop some files here, or click to select files</p>
       )}
     </Box>
   );
