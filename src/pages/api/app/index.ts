@@ -130,6 +130,9 @@ export default async function handler(
           address: "Default address",
         },
       });
+      console.log(
+        "################Success creating company########################"
+      );
       await prisma.users.create({
         data: {
           name,
@@ -137,6 +140,9 @@ export default async function handler(
           companyId: newCompany.id,
         },
       });
+      console.log(
+        "################Success creating user########################"
+      );
       const newLocation = await prisma.locations.create({
         data: {
           name: "Default location",
@@ -144,12 +150,18 @@ export default async function handler(
           companyId: newCompany.id,
         },
       });
+      console.log(
+        "################Success creating location########################"
+      );
       const newMenusData = [
         { name: "mote-hinn-kharr", price: 500 },
         { name: "shan-khout-swell", price: 1500 },
       ];
       const newMenus = await prisma.$transaction(
         newMenusData.map((menu) => prisma.menus.create({ data: menu }))
+      );
+      console.log(
+        "################Success creating menu########################"
       );
       const newMenuCategoriesData = [
         { name: "Default category 1" },
@@ -159,6 +171,9 @@ export default async function handler(
         newMenuCategoriesData.map((menuCategory) =>
           prisma.menuCategories.create({ data: menuCategory })
         )
+      );
+      console.log(
+        "################Success creating menuCategories########################"
       );
       const newMenusMenuCategoriesLocationsData = [
         {
@@ -180,11 +195,17 @@ export default async function handler(
             })
         )
       );
+      console.log(
+        "################Success creating menusMenuCategoriesLocations########################"
+      );
       const newAddonCategoriesData = [{ name: "Drinks" }, { name: "Sizes" }];
       const newAddonCategories = await prisma.$transaction(
         newAddonCategoriesData.map((addonCategory) =>
           prisma.addonCategories.create({ data: addonCategory })
         )
+      );
+      console.log(
+        "################Success creating addonCategories########################"
       );
       await prisma.menusAddonCategories.createMany({
         data: [
@@ -198,6 +219,9 @@ export default async function handler(
           },
         ],
       });
+      console.log(
+        "################Success creating menusAddonCategories########################"
+      );
       const newAddonsData = [
         {
           name: "Cola",
@@ -222,6 +246,9 @@ export default async function handler(
       ];
       const newAddons = await prisma.$transaction(
         newAddonsData.map((addon) => prisma.addons.create({ data: addon }))
+      );
+      console.log(
+        "################Success creating addon########################"
       );
       return res.send({
         menus: newMenus,
