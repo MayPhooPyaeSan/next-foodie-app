@@ -1,4 +1,7 @@
+import { config } from "@/config";
+import { getSelectedLocationId } from "@/utils/client";
 import {
+  PayloadAction,
   createAsyncThunk,
   createSelector,
   createSlice,
@@ -15,16 +18,16 @@ import { setMenus } from "./menusSlice";
 import { setOrderlines } from "./orderlinesSlice";
 import { setOrders } from "./ordersSlice";
 import { setTables } from "./tablesSlice";
-import { config } from "@/config";
-import { getSelectedLocationId } from "@/utils/client";
 
 interface AddonsState {
   isLoading: boolean;
+  init: boolean;
   error: Error | null;
 }
 
 const initialState: AddonsState = {
   isLoading: false,
+  init: false,
   error: null,
 };
 
@@ -71,6 +74,7 @@ export const fetchAppData = createAsyncThunk(
     if (!selectedLocationId) {
       localStorage.setItem("selectedLocationId", locations[0].id);
     }
+    thunkAPI.dispatch(setInit(true));
   }
 );
 
@@ -78,13 +82,16 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    setInit: (state, action: PayloadAction<boolean>) => {
+      state.init = action.payload;
+    },
     setAppLoading: (state, action) => {
       state.isLoading = action.payload;
     },
   },
 });
 
-export const { setAppLoading } = appSlice.actions;
+export const { setAppLoading, setInit } = appSlice.actions;
 
 export const selectMenuCategories = (state: RootState) =>
   state.menuCategories.items;
