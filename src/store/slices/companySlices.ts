@@ -1,5 +1,5 @@
 import { Companies as Company } from "@prisma/client";
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface CompanyState {
   isLoading: boolean;
@@ -17,7 +17,7 @@ export const companySlice = createSlice({
   name: "company",
   initialState,
   reducers: {
-    setCompany: (state, action) => {
+    setCompany: (state, action: PayloadAction<Company>) => {
       state.item = action.payload;
     },
   },
