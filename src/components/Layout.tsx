@@ -18,13 +18,13 @@ const Layout = ({ children }: Props) => {
   if (isOrderApp)
     return (
       <Box sx={{ height: "100%" }}>
-        <OrderLayout children={children} />
+        <OrderLayout>{children}</OrderLayout>
       </Box>
     );
   if (isBackofficeApp)
     return (
       <Box sx={{ height: "100%" }}>
-        <BackofficeLayout children={children} />
+        <BackofficeLayout>{children}</BackofficeLayout>
       </Box>
     );
   return null;
