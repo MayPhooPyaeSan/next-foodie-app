@@ -1,6 +1,4 @@
 import MenuCard from "@/components/MenuCard";
-import OrderLayout from "@/components/OrderLayout";
-import ViewCartBar from "@/components/ViewCartBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getMenusByMenuCategoryId } from "@/utils/client";
@@ -9,7 +7,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { MenuCategories as MenuCategory } from "@prisma/client";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const OrderApp = () => {
   const router = useRouter();
@@ -27,7 +25,7 @@ const OrderApp = () => {
     }
   }, [menuCategories]);
 
-  const renderMenus = () => {
+  const renderMenus = useCallback(() => {
     const isValid = selectedLocationId && selectedMenuCategory;
     if (!isValid) return;
     const menuCategoryId = String(selectedMenuCategory.id);
@@ -42,32 +40,39 @@ const OrderApp = () => {
       const href = { pathname: `/order/menus/${item.id}`, query };
       return <MenuCard key={item.id} menu={item} href={href} />;
     });
-  };
+  }, [selectedMenuCategory, menus]);
 
   return (
-    <OrderLayout>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={(evt, value) => setValue(value)}
-            variant="scrollable"
-          >
-            {menuCategories.map((item) => {
-              return (
-                <Tab
-                  key={item.id}
-                  label={item.name}
-                  onClick={() => setSelectedMenuCategory(item)}
-                />
-              );
-            })}
-          </Tabs>
-        </Box>
-        <Box sx={{ p: 3, display: "flex" }}>{renderMenus()}</Box>
-        <ViewCartBar />
+    <Box>
+      <Box>
+        <Tabs
+          TabIndicatorProps={{
+            style: { background: "#1B9C85" },
+          }}
+          value={value}
+          onChange={(evt, value) => setValue(value)}
+          variant="scrollable"
+          sx={{
+            ".Mui-selected": {
+              color: "#1B9C85 !important",
+              fontWeight: "bold",
+            },
+          }}
+        >
+          {menuCategories.map((item) => {
+            return (
+              <Tab
+                key={item.id}
+                label={item.name}
+                sx={{ color: "#4C4C6D" }}
+                onClick={() => setSelectedMenuCategory(item)}
+              />
+            );
+          })}
+        </Tabs>
       </Box>
-    </OrderLayout>
+      <Box sx={{ pt: 2, display: "flex" }}>{renderMenus()}</Box>
+    </Box>
   );
 };
 

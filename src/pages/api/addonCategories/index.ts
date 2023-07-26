@@ -26,11 +26,11 @@ export default async function handler(
     return res.status(200).send(addonCategory);
   } else if (req.method === "PUT") {
     const { id, name, isRequired } = req.body;
-    await prisma.addonCategories.update({
+    const addonCategoryUpdated = await prisma.addonCategories.update({
       data: { name, isRequired },
       where: { id },
     });
-    return res.send(200);
+    return res.status(200).send(addonCategoryUpdated);
   } else if (req.method === "DELETE") {
     const addonCategoryId = req.query.id;
     const isValid = addonCategoryId;

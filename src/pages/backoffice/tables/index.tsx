@@ -1,20 +1,10 @@
 import ItemCard from "@/components/ItemCard";
-import Layout from "@/components/BackofficeLayout";
-import { config } from "@/config";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import { addTable } from "@/store/slices/tablesSlice";
 import { getSelectedLocationId } from "@/utils/client";
 import AddIcon from "@mui/icons-material/Add";
 import TableBarIcon from "@mui/icons-material/TableBar";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import NewTable from "./NewTable";
 
@@ -28,7 +18,7 @@ const Tables = () => {
   );
 
   return (
-    <Layout title="Tables">
+    <Box>
       <Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
@@ -65,7 +55,7 @@ const Tables = () => {
         </Box>
       </Box>
       <NewTable open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

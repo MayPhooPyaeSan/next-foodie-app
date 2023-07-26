@@ -1,5 +1,4 @@
 import DeleteDialog from "@/components/DeleteDialog";
-import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeAddon, updateAddon } from "@/store/slices/addonsSlice";
@@ -50,7 +49,7 @@ const EditAddon = () => {
   if (!addon) return null;
 
   return (
-    <Layout title="Edit Addon">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Button
           color="error"
@@ -89,7 +88,7 @@ const EditAddon = () => {
         setOpen={setOpen}
         callback={handleDeleteAddon}
       />
-    </Layout>
+    </Box>
   );
 };
 

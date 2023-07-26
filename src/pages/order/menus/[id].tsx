@@ -1,15 +1,15 @@
 import AddonCategories from "@/components/AddonCategories";
-import OrderLayout from "@/components/OrderLayout";
 import QuantitySelector from "@/components/QuantitySelector";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { CartItem, addToCart, selectCart } from "@/store/slices/cartSlice";
 import { generateRandomId, getAddonCategoriesByMenuId } from "@/utils/client";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
   Addons as Addon,
   AddonCategories as AddonCategory,
 } from "@prisma/client";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -115,7 +115,7 @@ const Menu = () => {
   };
 
   return (
-    <OrderLayout>
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -124,30 +124,49 @@ const Menu = () => {
           p: 4,
         }}
       >
-        <Typography variant="h3" sx={{ mb: 2 }}>
-          {menu?.name}
-        </Typography>
-        <AddonCategories
-          validAddonCategories={validAddonCategories}
-          validAddons={validAddons}
-          selectedAddons={selectedAddons}
-          onChange={(checked, item) => handleAddonSelect(checked, item)}
+        <Image
+          src={menu?.assetUrl || ""}
+          alt="menu-image"
+          width={150}
+          height={150}
+          style={{
+            borderRadius: "50%",
+            margin: "0 auto",
+          }}
         />
-        <QuantitySelector
-          value={quantity}
-          onDecrease={handleQuantityDecrease}
-          onIncrease={handleQuantityIncrease}
-        />
-        <Button
-          variant="contained"
-          disabled={isDisabled}
-          onClick={handleAddToCart}
-          sx={{ mt: 3, width: "fit-content" }}
+        <Box
+          sx={{
+            mt: 5,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          Add to cart
-        </Button>
+          <AddonCategories
+            validAddonCategories={validAddonCategories}
+            validAddons={validAddons}
+            selectedAddons={selectedAddons}
+            onChange={(checked, item) => handleAddonSelect(checked, item)}
+          />
+          <QuantitySelector
+            value={quantity}
+            onDecrease={handleQuantityDecrease}
+            onIncrease={handleQuantityIncrease}
+          />
+          <Button
+            variant="contained"
+            disabled={isDisabled}
+            onClick={handleAddToCart}
+            sx={{
+              width: "fit-content",
+              mt: 3,
+            }}
+          >
+            Add to cart
+          </Button>
+        </Box>
       </Box>
-    </OrderLayout>
+    </Box>
   );
 };
 export default Menu;

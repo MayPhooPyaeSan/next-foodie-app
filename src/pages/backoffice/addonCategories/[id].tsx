@@ -1,8 +1,10 @@
 import DeleteDialog from "@/components/DeleteDialog";
-import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { removeAddonCategory } from "@/store/slices/addonCategoriesSlice";
+import {
+  removeAddonCategory,
+  updateAddonCategory,
+} from "@/store/slices/addonCategoriesSlice";
 import { appData } from "@/store/slices/appSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -14,38 +16,47 @@ import {
 } from "@mui/material";
 import { AddonCategories as AddonCategory } from "@prisma/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const EditAddonCategories = () => {
   const router = useRouter();
   const addonCategoryId = router.query.id as string;
   const { addonCategories } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
-  const addonCategory = addonCategories.find(
-    (item) => item.id === Number(addonCategoryId)
-  ) as AddonCategory;
-  const [updateAddonCategory, setUpdateAddonCategory] =
-    useState<Partial<AddonCategory>>();
+  const [addonCategory, setAddonCategory] = useState<AddonCategory>();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (addonCategories.length) {
+      const addonCategory = addonCategories.find(
+        (item) => item.id === Number(addonCategoryId)
+      ) as AddonCategory;
+      setAddonCategory(addonCategory);
+    }
+  }, [addonCategories]);
+
   const handleUpdateAddonCategory = async () => {
-    await fetch(`${config.apiBaseUrl}/addonCategories`, {
+    const response = await fetch(`${config.apiBaseUrl}/addonCategories`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: addonCategory.id, ...updateAddonCategory }),
+      body: JSON.stringify(addonCategory),
     });
+    const addonCategoryUpdated = await response.json();
+    dispatch(updateAddonCategory(addonCategoryUpdated));
   };
 
   const handleDeleteAddonCategory = async () => {
     await fetch(`${config.apiBaseUrl}/addonCategories?id=${addonCategoryId}`, {
       method: "DELETE",
     });
-    dispatch(removeAddonCategory(addonCategory));
+    addonCategory && dispatch(removeAddonCategory(addonCategory));
     router.push("/backoffice/addonCategories");
   };
 
+  if (!addonCategory) return null;
+
   return (
-    <Layout title="Edit Addon Categories">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Button
           color="error"
@@ -60,8 +71,8 @@ const EditAddonCategories = () => {
         <TextField
           defaultValue={addonCategory?.name}
           onChange={(evt) =>
-            setUpdateAddonCategory({
-              ...updateAddonCategory,
+            setAddonCategory({
+              ...addonCategory,
               name: evt.target.value,
             })
           }
@@ -72,8 +83,8 @@ const EditAddonCategories = () => {
             <Switch
               defaultChecked={addonCategory?.isRequired ? true : false}
               onChange={(evt) =>
-                setUpdateAddonCategory({
-                  ...updateAddonCategory,
+                setAddonCategory({
+                  ...addonCategory,
                   isRequired: evt.target.checked,
                 })
               }
@@ -95,7 +106,7 @@ const EditAddonCategories = () => {
         setOpen={setOpen}
         callback={handleDeleteAddonCategory}
       />
-    </Layout>
+    </Box>
   );
 };
 

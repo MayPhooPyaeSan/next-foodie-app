@@ -1,14 +1,21 @@
+import Layout from "@/components/Layout";
 import { store } from "@/store";
-import "./global.css";
+import { theme } from "@/utils/theme";
+import { ThemeProvider } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
+import "./global.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider>
       <Provider store={store}>
-        <Component {...pageProps} />
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
       </Provider>
     </SessionProvider>
   );

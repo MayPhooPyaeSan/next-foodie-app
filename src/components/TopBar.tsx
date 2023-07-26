@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import logo from "../assets/logo.png";
 
 interface Props {
@@ -13,8 +14,22 @@ interface Props {
 
 const TopBar = ({ title = "" }: Props) => {
   const { data } = useSession();
+  const router = useRouter();
+  const getTitle = () => {
+    const pathname = router.pathname;
+    if (pathname.includes("orders")) return "Orders";
+    if (pathname.includes("menuCategories")) return "Menu Categories";
+    if (pathname.includes("menus")) return "Menus";
+    if (pathname.includes("addonCategories")) return "Adddon Categories";
+    if (pathname.includes("addons")) return "Addons";
+    if (pathname.includes("tables")) return "Tables";
+    if (pathname.includes("locations")) return "Locations";
+    if (pathname.includes("settings")) return "Settings";
+    return "";
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
         <Toolbar sx={{ backgroundColor: "#1B9C85" }}>
           {data ? (
@@ -33,7 +48,7 @@ const TopBar = ({ title = "" }: Props) => {
                   style={{ width: "100%", height: "100%" }}
                 />
               </Box>
-              <Typography variant="h5">{title}</Typography>
+              <Typography variant="h5">{getTitle()}</Typography>
               <Button
                 variant="text"
                 size="large"

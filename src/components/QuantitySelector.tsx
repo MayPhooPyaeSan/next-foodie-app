@@ -15,6 +15,7 @@ const QuantitySelector = ({ value, onIncrease, onDecrease }: Props) => {
         justifyContent: "space-between",
         alignItems: "center",
         maxWidth: "100px",
+        mt: 5,
       }}
     >
       <IconButton color="primary" onClick={onDecrease}>
