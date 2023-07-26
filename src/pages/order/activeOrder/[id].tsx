@@ -1,4 +1,3 @@
-import OrderLayout from "@/components/OrderLayout";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { emptyCart } from "@/store/slices/cartSlice";
@@ -27,21 +26,18 @@ const ActiveOrder = () => {
   if (!order) return null;
 
   return (
-    <OrderLayout>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mt: 4,
-        }}
-      >
-        <Paper sx={{ width: 500 }}>
-          <Typography variant="h5">orderId: {order.id}</Typography>
-          <Typography variant="h5">price: {order.price}</Typography>
-          <Typography variant="h5">tableId: {order.tableId}</Typography>
-        </Paper>
-      </Box>
-    </OrderLayout>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Paper sx={{ maxWidth: 500 }}>
+        <Typography variant="h5">orderId: {order.id}</Typography>
+        <Typography variant="h5">price: {order.price}</Typography>
+        <Typography variant="h5">tableId: {order.tableId}</Typography>
+      </Paper>
+    </Box>
   );
 };
 

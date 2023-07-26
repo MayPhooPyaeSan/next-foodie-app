@@ -1,11 +1,6 @@
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  CartItem,
-  emptyCart,
-  removeFromCart,
-  selectCart,
-} from "@/store/slices/cartSlice";
+import { CartItem, removeFromCart, selectCart } from "@/store/slices/cartSlice";
 import { addOrder } from "@/store/slices/ordersSlice";
 import { getCartTotalPrice } from "@/utils/client";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -41,8 +36,12 @@ const Review = () => {
             alignItems: "center",
           }}
         >
-          <Typography>{item.name}</Typography>
-          <Typography>{item.price}</Typography>
+          <Typography color={"primary"} sx={{ fontStyle: "italic" }}>
+            {item.name}
+          </Typography>
+          <Typography color={"primary"} sx={{ fontStyle: "italic" }}>
+            {item.price}
+          </Typography>
         </Box>
       );
     });
@@ -79,6 +78,9 @@ const Review = () => {
         display: "flex",
         justifyContent: "center",
         p: 3,
+        bgcolor: "#E8F6EF",
+        borderRadius: 15,
+        mx: 3,
       }}
     >
       <Box
@@ -86,7 +88,11 @@ const Review = () => {
           width: { xs: "100%", md: "500px" },
         }}
       >
-        <Typography variant="h5" sx={{ textAlign: "center", mb: 3 }}>
+        <Typography
+          color={"primary"}
+          variant="h4"
+          sx={{ textAlign: "center", mb: 3 }}
+        >
           Review your order
         </Typography>
         {items.map((cartItem, index) => {
@@ -99,7 +105,7 @@ const Review = () => {
                     width: 25,
                     height: 25,
                     mr: 1,
-                    backgroundColor: "green",
+                    backgroundColor: "#1B9C85",
                   }}
                 >
                   {quantity}
@@ -111,8 +117,12 @@ const Review = () => {
                     width: "100%",
                   }}
                 >
-                  <Typography variant="h6">{menu.name}</Typography>
-                  <Typography variant="h6">{menu.price}</Typography>
+                  <Typography variant="h6" color={"primary"}>
+                    {menu.name}
+                  </Typography>
+                  <Typography variant="h6" color={"primary"}>
+                    {menu.price}
+                  </Typography>
                 </Box>
               </Box>
               <Box sx={{ pl: 6 }}>{renderAddons(addons)}</Box>
@@ -125,10 +135,12 @@ const Review = () => {
                 }}
               >
                 <DeleteIcon
+                  color="primary"
                   sx={{ mr: 2, cursor: "pointer" }}
                   onClick={() => handleRemoveFromCart(cartItem)}
                 />
                 <EditIcon
+                  color="primary"
                   sx={{ cursor: "pointer" }}
                   onClick={() =>
                     router.push({
@@ -143,7 +155,7 @@ const Review = () => {
         })}
         <Divider />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-          <Typography variant="h4">
+          <Typography variant="h4" color="primary">
             Total: {getCartTotalPrice(items)}
           </Typography>
         </Box>

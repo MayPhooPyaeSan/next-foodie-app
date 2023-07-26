@@ -12,6 +12,10 @@ interface Props {
 const OrderAppHeader = ({ cartItemCount }: Props) => {
   const router = useRouter();
   const isHome = router.pathname === "/order";
+  const isCart = router.pathname === "/order/cart";
+  const isActiveOrder = router.pathname.includes("/order/activeOrder");
+  const showCartIcon = !isCart && !isActiveOrder;
+
   return (
     <Box
       sx={{
@@ -23,38 +27,40 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
         zIndex: 5,
       }}
     >
-      <Box
-        sx={{
-          position: "absolute",
-          top: 10,
-          right: { xs: 40, md: 80, lg: 200 },
-          cursor: "pointer",
-        }}
-        onClick={() =>
-          router.push({ pathname: "/order/cart", query: router.query })
-        }
-      >
-        <ShoppingCartCheckoutIcon
+      {showCartIcon && (
+        <Box
           sx={{
-            fontSize: "40px",
-            color: "#FFE194",
+            position: "absolute",
+            top: 10,
+            right: { xs: 40, md: 80, lg: 200 },
+            cursor: "pointer",
           }}
-        />
-        {cartItemCount > 0 && (
-          <Typography
-            variant="h5"
+          onClick={() =>
+            router.push({ pathname: "/order/cart", query: router.query })
+          }
+        >
+          <ShoppingCartCheckoutIcon
             sx={{
-              textAlign: "right",
-              color: "#E8F6EF",
-              position: "absolute",
-              top: -10,
-              right: -10,
+              fontSize: "40px",
+              color: "#FFE194",
             }}
-          >
-            {cartItemCount}
-          </Typography>
-        )}
-      </Box>
+          />
+          {cartItemCount > 0 && (
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: "right",
+                color: "#E8F6EF",
+                position: "absolute",
+                top: -10,
+                right: -10,
+              }}
+            >
+              {cartItemCount}
+            </Typography>
+          )}
+        </Box>
+      )}
 
       <Image
         src={OrderAppHeaderImg}
