@@ -1,3 +1,4 @@
+import { getEnv } from "@/config";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,6 +14,7 @@ interface Props {
 
 const TopBar = ({ title = "" }: Props) => {
   const { data } = useSession();
+  const currentEnv = getEnv();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -26,12 +28,27 @@ const TopBar = ({ title = "" }: Props) => {
                 width: "100%",
               }}
             >
-              <Box sx={{ width: "150px", position: "relative", mt: 2 }}>
+              <Box
+                sx={{
+                  width: "150px",
+                  display: "flex",
+                  position: "relative",
+                  mt: 2,
+                  alignItems: "center",
+                }}
+              >
                 <Image
                   alt="logo"
                   src={logo}
                   style={{ width: "100%", height: "100%" }}
                 />
+                {currentEnv && (
+                  <Box sx={{ ml: 3 }}>
+                    <Typography variant="h6" sx={{ color: "#4C4C6D" }}>
+                      {currentEnv}
+                    </Typography>
+                  </Box>
+                )}
               </Box>
               <Typography variant="h5">{title}</Typography>
               <Button
