@@ -1,5 +1,4 @@
 import DeleteDialog from "@/components/DeleteDialog";
-import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -53,7 +52,7 @@ const EditLocation = () => {
   if (!location) return null;
 
   return (
-    <Layout title="Edit Location">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Button
           color="error"
@@ -93,7 +92,7 @@ const EditLocation = () => {
         setOpen={setOpen}
         callback={handleDeleteLocation}
       />
-    </Layout>
+    </Box>
   );
 };
 

@@ -1,4 +1,3 @@
-import { getEnv } from "@/config";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,17 +5,27 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import logo from "../assets/logo.png";
 
-interface Props {
-  title?: string;
-}
-
-const TopBar = ({ title = "" }: Props) => {
+const TopBar = () => {
   const { data } = useSession();
-  const currentEnv = getEnv();
+  const router = useRouter();
+  const getTitle = () => {
+    const pathname = router.pathname;
+    if (pathname.includes("orders")) return "Orders";
+    if (pathname.includes("menuCategories")) return "Menu Categories";
+    if (pathname.includes("menus")) return "Menus";
+    if (pathname.includes("addonCategories")) return "Adddon Categories";
+    if (pathname.includes("addons")) return "Addons";
+    if (pathname.includes("tables")) return "Tables";
+    if (pathname.includes("locations")) return "Locations";
+    if (pathname.includes("settings")) return "Settings";
+    return "";
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
         <Toolbar sx={{ backgroundColor: "#1B9C85" }}>
           {data ? (
@@ -42,15 +51,8 @@ const TopBar = ({ title = "" }: Props) => {
                   src={logo}
                   style={{ width: "100%", height: "100%" }}
                 />
-                {currentEnv && (
-                  <Box sx={{ ml: 3 }}>
-                    <Typography variant="h6" sx={{ color: "#4C4C6D" }}>
-                      {currentEnv}
-                    </Typography>
-                  </Box>
-                )}
               </Box>
-              <Typography variant="h5">{title}</Typography>
+              <Typography variant="h5">{getTitle()}</Typography>
               <Button
                 variant="text"
                 size="large"

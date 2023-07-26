@@ -1,5 +1,4 @@
 import DeleteDialog from "@/components/DeleteDialog";
-import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -40,7 +39,7 @@ const EditTable = () => {
   };
 
   return (
-    <Layout title="Edit Table">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Button
           color="error"
@@ -71,7 +70,7 @@ const EditTable = () => {
         setOpen={setOpen}
         callback={handleDeleteTable}
       />
-    </Layout>
+    </Box>
   );
 };
 

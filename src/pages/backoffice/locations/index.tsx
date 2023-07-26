@@ -1,5 +1,4 @@
 import ItemCard from "@/components/ItemCard";
-import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -42,7 +41,7 @@ const Locations = () => {
   };
 
   return (
-    <Layout title="Locations">
+    <Box>
       <Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
@@ -79,7 +78,7 @@ const Locations = () => {
         ))}
       </Box>
       <NewLocation open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

@@ -1,4 +1,3 @@
-import Layout from "@/components/BackofficeLayout";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
@@ -273,7 +272,7 @@ const Orders = () => {
   };
 
   return (
-    <Layout title="Orders">
+    <Box>
       <TableContainer component={Paper} sx={{ maxHeight: "100%" }}>
         <Table aria-label="collapsible table" stickyHeader>
           <TableHead>
@@ -300,7 +299,7 @@ const Orders = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Layout>
+    </Box>
   );
 };
 

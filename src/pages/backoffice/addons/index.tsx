@@ -1,4 +1,3 @@
-import Layout from "@/components/BackofficeLayout";
 import ItemCard from "@/components/ItemCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -23,7 +22,7 @@ const Addons = () => {
   );
 
   return (
-    <Layout title="Addons">
+    <Box>
       <Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
@@ -59,7 +58,7 @@ const Addons = () => {
         </Box>
       </Box>
       <NewAddon open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

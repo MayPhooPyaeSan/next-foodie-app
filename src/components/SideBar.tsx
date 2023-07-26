@@ -24,6 +24,7 @@ const SideBar = () => {
         minWidth: 250,
         backgroundColor: "#1B9C85",
         borderTopRightRadius: "20px",
+        minHeight: "100vh",
       }}
     >
       <List sx={{ p: 0 }}>
