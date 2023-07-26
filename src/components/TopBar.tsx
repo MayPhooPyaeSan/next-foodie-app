@@ -8,11 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import logo from "../assets/logo.png";
 
-interface Props {
-  title?: string;
-}
-
-const TopBar = ({ title = "" }: Props) => {
+const TopBar = () => {
   const { data } = useSession();
   const router = useRouter();
   const getTitle = () => {
@@ -41,7 +37,15 @@ const TopBar = ({ title = "" }: Props) => {
                 width: "100%",
               }}
             >
-              <Box sx={{ width: "150px", position: "relative", mt: 2 }}>
+              <Box
+                sx={{
+                  width: "150px",
+                  display: "flex",
+                  position: "relative",
+                  mt: 2,
+                  alignItems: "center",
+                }}
+              >
                 <Image
                   alt="logo"
                   src={logo}
