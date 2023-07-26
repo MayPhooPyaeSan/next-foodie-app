@@ -56,6 +56,7 @@ export const fetchAppData = createAsyncThunk(
       company,
       orderlines,
     } = responseJson;
+    console.log(responseJson);
     thunkAPI.dispatch(setAddons(addons));
     thunkAPI.dispatch(setMenus(menus));
     thunkAPI.dispatch(setMenuCategories(menuCategories));

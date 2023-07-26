@@ -59,6 +59,8 @@ const Settings = () => {
     });
   };
 
+  if (!company) return null;
+
   return (
     <Box>
       <Box
