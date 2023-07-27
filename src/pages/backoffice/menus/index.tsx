@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import MenuCard from "@/components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -9,7 +10,8 @@ import NewMenu from "./NewMenu";
 
 const Menus = () => {
   const [open, setOpen] = useState(false);
-  const { menusMenuCategoriesLocations, menus } = useAppSelector(appData);
+  const { isLoading, menusMenuCategoriesLocations, menus } =
+    useAppSelector(appData);
   const selectedLocationId = getSelectedLocationId() as string;
 
   const validMenusIds = menusMenuCategoriesLocations
@@ -21,6 +23,8 @@ const Menus = () => {
   const filteredMenus = menus.filter(
     (menu) => menu.id && validMenusIds.includes(menu.id)
   );
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>

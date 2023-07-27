@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -16,7 +17,7 @@ import { Companies as Company, Locations as Location } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 const Settings = () => {
-  const { company, locations } = useAppSelector(appData);
+  const { isLoading, company, locations } = useAppSelector(appData);
   const [newCompany, setNewCompany] = useState<Partial<Company>>({
     id: company?.id as number,
     name: company?.name as string,
@@ -59,6 +60,7 @@ const Settings = () => {
     });
   };
 
+  if (isLoading) return <Loading />;
   if (!company) return null;
 
   return (

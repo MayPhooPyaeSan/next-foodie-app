@@ -1,4 +1,5 @@
 import ItemCard from "@/components/ItemCard";
+import Loading from "@/components/Loading";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getSelectedLocationId } from "@/utils/client";
@@ -9,7 +10,7 @@ import { useState } from "react";
 import NewMenuCategory from "./NewMenuCategory";
 
 const MenuCategories = () => {
-  const { menuCategories, menusMenuCategoriesLocations } =
+  const { isLoading, menuCategories, menusMenuCategoriesLocations } =
     useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const selectedLocationId = getSelectedLocationId() as string;
@@ -31,6 +32,8 @@ const MenuCategories = () => {
         item.locationId === Number(selectedLocationId)
     ).length;
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>

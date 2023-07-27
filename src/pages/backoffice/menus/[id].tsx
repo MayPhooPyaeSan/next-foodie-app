@@ -1,4 +1,5 @@
 import DeleteDialog from "@/components/DeleteDialog";
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -25,7 +26,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const EditMenu = () => {
   const router = useRouter();
   const menuId = router.query.id as string;
-  const { menus, addonCategories, menusAddonCategories } =
+  const { isLoading, menus, addonCategories, menusAddonCategories } =
     useAppSelector(appData);
   const menu = menus.find((menu) => menu.id === Number(menuId)) as Menu;
   const [menuToUpdate, setMenuToUpdate] = useState<Partial<Menu>>();
@@ -65,6 +66,8 @@ const EditMenu = () => {
     dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
     router.push("/backoffice/menus");
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>

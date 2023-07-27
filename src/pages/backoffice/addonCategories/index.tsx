@@ -1,4 +1,5 @@
 import ItemCard from "@/components/ItemCard";
+import Loading from "@/components/Loading";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getSelectedLocationId } from "@/utils/client";
@@ -6,10 +7,12 @@ import AddIcon from "@mui/icons-material/Add";
 import ClassIcon from "@mui/icons-material/Class";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
+import NewAddonCategory from "./NewAddonCategory";
 
 const AddonCategories = () => {
   const selectedLocationId = getSelectedLocationId();
   const {
+    isLoading,
     addonCategories,
     addons,
     menusAddonCategories,
@@ -33,6 +36,8 @@ const AddonCategories = () => {
     return addons.filter((item) => item.addonCategoryId === addonCategoryId)
       .length;
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>
@@ -72,6 +77,7 @@ const AddonCategories = () => {
           ))}
         </Box>
       </Box>
+      <NewAddonCategory open={open} setOpen={setOpen} />
     </Box>
   );
 };

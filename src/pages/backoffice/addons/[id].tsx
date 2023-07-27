@@ -1,4 +1,5 @@
 import DeleteDialog from "@/components/DeleteDialog";
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeAddon, updateAddon } from "@/store/slices/addonsSlice";
@@ -13,7 +14,7 @@ const EditAddon = () => {
   const router = useRouter();
   const addonId = router.query.id as string;
   const [open, setOpen] = useState(false);
-  const { addons } = useAppSelector(appData);
+  const { isLoading, addons } = useAppSelector(appData);
   const [addon, setAddon] = useState<Addon>();
   const dispatch = useAppDispatch();
 
@@ -46,6 +47,7 @@ const EditAddon = () => {
     router.push("/backoffice/addons");
   };
 
+  if (isLoading) return <Loading />;
   if (!addon) return null;
 
   return (
@@ -62,7 +64,7 @@ const EditAddon = () => {
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <TextField
-          defaultValue={addon.name}
+          defaultValue={addon?.name}
           sx={{ mb: 2 }}
           onChange={(evt) => setAddon({ ...addon, name: evt.target.value })}
         />

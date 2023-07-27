@@ -1,4 +1,5 @@
 import DeleteDialog from "@/components/DeleteDialog";
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -21,7 +22,7 @@ import { useEffect, useState } from "react";
 const EditAddonCategories = () => {
   const router = useRouter();
   const addonCategoryId = router.query.id as string;
-  const { addonCategories } = useAppSelector(appData);
+  const { isLoading, addonCategories } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const [addonCategory, setAddonCategory] = useState<AddonCategory>();
   const dispatch = useAppDispatch();
@@ -53,6 +54,7 @@ const EditAddonCategories = () => {
     router.push("/backoffice/addonCategories");
   };
 
+  if (isLoading) return <Loading />;
   if (!addonCategory) return null;
 
   return (
