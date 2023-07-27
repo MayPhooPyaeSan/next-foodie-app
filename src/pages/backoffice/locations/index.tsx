@@ -1,4 +1,5 @@
 import ItemCard from "@/components/ItemCard";
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -10,7 +11,7 @@ import { useEffect, useState } from "react";
 import NewLocation from "./NewLocation";
 
 const Locations = () => {
-  const { locations } = useAppSelector(appData);
+  const { isLoading, locations } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const [updatedLocations, setUpdateLocations] =
     useState<Location[]>(locations);
@@ -36,9 +37,10 @@ const Locations = () => {
         },
         body: JSON.stringify(location),
       });
-      // fetchData();
     }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>

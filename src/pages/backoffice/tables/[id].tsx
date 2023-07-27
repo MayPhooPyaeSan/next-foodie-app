@@ -1,4 +1,5 @@
 import DeleteDialog from "@/components/DeleteDialog";
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -13,7 +14,7 @@ const EditTable = () => {
   const router = useRouter();
   const tableId = router.query.id as string;
   const [open, setOpen] = useState(false);
-  const { tables } = useAppSelector(appData);
+  const { isLoading, tables } = useAppSelector(appData);
   const dispatch = useAppDispatch();
   const table = tables.find((table) => table.id === Number(tableId)) as Table;
   const [tableName, setTableName] = useState(table?.name);
@@ -38,6 +39,9 @@ const EditTable = () => {
     router.push("/backoffice/tables");
   };
 
+  if (isLoading) return <Loading />;
+  if (!table) return null;
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
@@ -52,7 +56,7 @@ const EditTable = () => {
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <TextField
-          defaultValue={tableName}
+          defaultValue={table.name}
           sx={{ mb: 2 }}
           onChange={(evt) => setTableName(evt.target.value)}
         />

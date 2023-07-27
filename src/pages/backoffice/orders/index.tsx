@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
@@ -260,7 +261,7 @@ const Row = ({ order, orderlines, menus, addons, addonCategories }: Props) => {
 };
 
 const Orders = () => {
-  const { orders, orderlines, menus, addons, addonCategories } =
+  const { isLoading, orders, orderlines, menus, addons, addonCategories } =
     useAppSelector(appData);
   const selectedLocationId = getSelectedLocationId() as string;
   const currentLocationOrders = orders.filter(
@@ -270,6 +271,8 @@ const Orders = () => {
   const getOrderlinesByOrderId = (orderId: number) => {
     return orderlines.filter((item) => item.orderId === orderId);
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>

@@ -1,4 +1,5 @@
 import DeleteDialog from "@/components/DeleteDialog";
+import Loading from "@/components/Loading";
 import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -13,7 +14,7 @@ const EditLocation = () => {
   const router = useRouter();
   const locationId = router.query.id as string;
   const [open, setOpen] = useState(false);
-  const { locations } = useAppSelector(appData);
+  const { isLoading, locations } = useAppSelector(appData);
   const [location, setLocation] = useState<Location>();
   const dispatch = useAppDispatch();
 
@@ -49,6 +50,7 @@ const EditLocation = () => {
     router.push("/backoffice/locations");
   };
 
+  if (isLoading) return <Loading />;
   if (!location) return null;
 
   return (

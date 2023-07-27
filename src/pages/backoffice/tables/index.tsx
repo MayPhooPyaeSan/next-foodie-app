@@ -1,4 +1,5 @@
 import ItemCard from "@/components/ItemCard";
+import Loading from "@/components/Loading";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getSelectedLocationId } from "@/utils/client";
@@ -9,13 +10,15 @@ import { useState } from "react";
 import NewTable from "./NewTable";
 
 const Tables = () => {
-  const { tables } = useAppSelector(appData);
+  const { isLoading, tables } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const selectedLocationId = getSelectedLocationId();
 
   const validTables = tables.filter(
     (item) => item.locationId === Number(selectedLocationId)
   );
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box>

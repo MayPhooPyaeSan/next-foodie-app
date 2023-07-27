@@ -1,5 +1,4 @@
 import { config } from "@/config";
-import { getSelectedLocationId } from "@/utils/client";
 import {
   PayloadAction,
   createAsyncThunk,
@@ -56,6 +55,7 @@ export const fetchAppData = createAsyncThunk(
       company,
       orderlines,
     } = responseJson;
+
     thunkAPI.dispatch(setAddons(addons));
     thunkAPI.dispatch(setMenus(menus));
     thunkAPI.dispatch(setMenuCategories(menuCategories));
@@ -70,10 +70,7 @@ export const fetchAppData = createAsyncThunk(
     thunkAPI.dispatch(setTables(tables));
     thunkAPI.dispatch(setCompany(company));
     thunkAPI.dispatch(setAppLoading(false));
-    const selectedLocationId = getSelectedLocationId();
-    if (!selectedLocationId) {
-      localStorage.setItem("selectedLocationId", locations[0].id);
-    }
+    localStorage.setItem("selectedLocationId", locations[0].id);
     thunkAPI.dispatch(setInit(true));
   }
 );
@@ -93,6 +90,7 @@ export const appSlice = createSlice({
 
 export const { setAppLoading, setInit } = appSlice.actions;
 
+export const selectApp = (state: RootState) => state.app;
 export const selectMenuCategories = (state: RootState) =>
   state.menuCategories.items;
 export const selectMenus = (state: RootState) => state.menus.items;
@@ -111,6 +109,7 @@ export const selectOrderlines = (state: RootState) => state.orderlines.items;
 
 export const appData = createSelector(
   [
+    selectApp,
     selectMenuCategories,
     selectMenus,
     selectMenusAddonCategories,
@@ -124,6 +123,7 @@ export const appData = createSelector(
     selectOrderlines,
   ],
   (
+    app,
     menuCategories,
     menus,
     menusAddonCategories,
@@ -137,6 +137,7 @@ export const appData = createSelector(
     orderlines
   ) => {
     return {
+      isLoading: app.isLoading,
       menuCategories,
       menus,
       menusAddonCategories,

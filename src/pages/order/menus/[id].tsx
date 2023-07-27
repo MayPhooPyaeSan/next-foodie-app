@@ -2,7 +2,7 @@ import AddonCategories from "@/components/AddonCategories";
 import QuantitySelector from "@/components/QuantitySelector";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import { CartItem, addToCart, selectCart } from "@/store/slices/cartSlice";
+import { CartItem, addToCart } from "@/store/slices/cartSlice";
 import { generateRandomId, getAddonCategoriesByMenuId } from "@/utils/client";
 import { Box, Button } from "@mui/material";
 import {
@@ -19,7 +19,7 @@ const Menu = () => {
   const dispatch = useAppDispatch();
   const { menus, addons, addonCategories, menusAddonCategories } =
     useAppSelector(appData);
-  const { items } = useAppSelector(selectCart);
+  const { isLoading } = useAppSelector((state) => state.app);
   const menuId = router.query.id as string;
   const menu = menus.find((item) => item.id === Number(menuId));
   const [quantity, setQuantity] = useState(1);

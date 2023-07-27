@@ -26,6 +26,7 @@ export default async function handler(
             isArchived: false,
           },
         });
+
       const menuIds = menusMenuCategoriesLocations
         .map((item) => item.menuId)
         .filter((item) => item !== null) as number[];
