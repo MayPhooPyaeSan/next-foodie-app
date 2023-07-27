@@ -27,7 +27,7 @@ const Layout = ({ children }: Props) => {
         <BackofficeLayout>{children}</BackofficeLayout>
       </Box>
     );
-  return null;
+  return <>{children}</>;
 };
 
 export default Layout;

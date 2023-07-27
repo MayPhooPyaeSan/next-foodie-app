@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonial";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 const FoodiePOS = () => {
   return (

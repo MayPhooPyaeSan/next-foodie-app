@@ -1,5 +1,4 @@
 import { config } from "@/config";
-import { getSelectedLocationId } from "@/utils/client";
 import {
   PayloadAction,
   createAsyncThunk,
@@ -71,10 +70,7 @@ export const fetchAppData = createAsyncThunk(
     thunkAPI.dispatch(setTables(tables));
     thunkAPI.dispatch(setCompany(company));
     thunkAPI.dispatch(setAppLoading(false));
-    const selectedLocationId = getSelectedLocationId();
-    if (!selectedLocationId) {
-      localStorage.setItem("selectedLocationId", locations[0].id);
-    }
+    localStorage.setItem("selectedLocationId", locations[0].id);
     thunkAPI.dispatch(setInit(true));
   }
 );
