@@ -15,21 +15,21 @@ import { useRef, useState } from "react";
 
 const testimonials = [
   {
-    name: "Aung Myanmar",
+    name: "Haruto",
     company: "Tasty Foods Co. Ltd",
     avatar: pic1,
     description: `We increased our sale by 120% during the first 3 months of using Foodie POS. Easy and simple to use. 
       Super duper recommended for everyone who are less tech savy. 5/5`,
   },
   {
-    name: "Hsu Thwe Mwe,",
+    name: "ASA",
     company: "Awa Sar Co. Ltd",
     avatar: pic2,
     description: `Our customers love Foodie POS. Quick and easy with QR code ordering. We now spend more time taking 
       care of our customers instead of taking orders manually. Thanks to Foodie POS!`,
   },
   {
-    name: "Pyae Phyo Han",
+    name: "Do Hyun",
     company: "Swey Mel Co. Ltd",
     avatar: pic3,
     description: `Integrated system. Easy to use. Very satisfied. Highly recommended for everyone. 
@@ -70,7 +70,13 @@ const Testimonials = () => {
                 }}
               >
                 <Avatar alt={item.name} sx={{ mr: 2 }}>
-                  <Image src={item.avatar} alt={item.name} fill />
+                  <Image
+                    src={item.avatar}
+                    alt={item.name}
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 768px) 100px, 200px"
+                  />
                 </Avatar>
                 <Box>
                   <Typography

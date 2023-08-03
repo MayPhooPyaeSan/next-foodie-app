@@ -13,7 +13,7 @@ datasource db {
 model Companies {
   id         Int         @id @default(autoincrement())
   name       String
-  address       String
+  address    String
   isArchived Boolean     @default(false)
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @default(now()) @updatedAt
@@ -49,7 +49,7 @@ model Locations {
 model Tables {
   id         Int       @id @default(autoincrement())
   name       String
-  assetUrl String?
+  assetUrl   String?
   locationId Int
   locations  Locations @relation(fields: [locationId], references: [id])
   isArchived Boolean   @default(false)
@@ -94,11 +94,11 @@ model MenusAddonCategories {
 model MenusMenuCategoriesLocations {
   id             Int            @id @default(autoincrement())
   menuId         Int?
-  menus          Menus?          @relation(fields: [menuId], references: [id])
+  menus          Menus?         @relation(fields: [menuId], references: [id])
   menuCategoryId Int
   menuCategories MenuCategories @relation(fields: [menuCategoryId], references: [id])
   locationId     Int?
-  locations      Locations?      @relation(fields: [locationId], references: [id])
+  locations      Locations?     @relation(fields: [locationId], references: [id])
   isArchived     Boolean        @default(false)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @default(now()) @updatedAt
@@ -142,18 +142,18 @@ model Orders {
 }
 
 model Orderlines {
-  id           Int         @id @default(autoincrement())
-  orderId      Int
-  menuId       Int
-  addonId      Int?
-  itemId       String
-  quantity     Int         @default(1)
-  status OrderStatus @default(PENDING)
-  orders       Orders      @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menus        Menus       @relation(fields: [menuId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  addons       Addons?     @relation(fields: [addonId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @default(now()) @updatedAt
+  id        Int         @id @default(autoincrement())
+  orderId   Int
+  menuId    Int
+  addonId   Int?
+  itemId    String
+  quantity  Int         @default(1)
+  status    OrderStatus @default(PENDING)
+  orders    Orders      @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus     Menus       @relation(fields: [menuId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  addons    Addons?     @relation(fields: [addonId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
 }
 
 enum OrderStatus {

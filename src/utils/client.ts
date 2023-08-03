@@ -78,7 +78,7 @@ export const getAddonsByLocationId = (
 };
 
 export const getQrCodeUrl = (locationId: number, tableId: number) => {
-  return `https://msquarefdc.sgp1.cdn.digitaloceanspaces.com/foodie-pos/qrcode/msquare/locationId-${locationId}-tableId-${tableId}.png`;
+  return `https://msquarefdc.sgp1.cdn.digitaloceanspaces.com/foodie-pos/qrcode/summer/locationId-${locationId}-tableId-${tableId}.png`;
 };
 
 export const getNumberOfMenusByOrderId = (
